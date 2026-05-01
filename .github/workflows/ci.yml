@@ -16,7 +16,7 @@ jobs:
 
       - name: Build and run tests
         run: |
-          docker-compose up -d --build
+          docker compose up -d --build
           sleep 5
-          docker-compose exec -T api pytest tests/ -v
-          docker-compose down
+          docker compose exec -T api pytest tests/ -v
+          docker compose down
