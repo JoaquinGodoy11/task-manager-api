@@ -21,9 +21,21 @@ jobs:
           echo "ALGORITHM=HS256" >> .env
           echo "ACCESS_TOKEN_EXPIRE_MINUTES=30" >> .env
 
-      - name: Build and run tests
+      - name: Build containers
+        run: docker compose build
+
+      - name: Start database
         run: |
-          docker compose up -d --build
+          docker compose up -d db
+          sleep 10
+
+      - name: Start API
+        run: |
+          docker compose up -d api
           sleep 5
-          docker compose exec -T api pytest tests/ -v
-          docker compose down
+
+      - name: Run tests
+        run: docker compose exec -T api pytest tests/ -v
+
+      - name: Teardown
+        run: docker compose d
