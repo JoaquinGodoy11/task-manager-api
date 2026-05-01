@@ -14,6 +14,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create .env file
+        run: |
+          echo "DATABASE_URL=postgresql://postgres:password@db:5432/taskmanager" >> .env
+          echo "SECRET_KEY=clave_secreta_para_ci_no_importa_cual" >> .env
+          echo "ALGORITHM=HS256" >> .env
+          echo "ACCESS_TOKEN_EXPIRE_MINUTES=30" >> .env
+
       - name: Build and run tests
         run: |
           docker compose up -d --build
