@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and run tests
+        run: |
+          docker-compose up -d --build
+          sleep 5
+          docker-compose exec -T api pytest tests/ -v
+          docker-compose down
