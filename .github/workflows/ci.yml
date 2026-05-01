@@ -25,17 +25,19 @@ jobs:
         run: docker compose build
 
       - name: Start database
-        run: |
-          docker compose up -d db
-          sleep 10
+        run: docker compose up -d db
+
+      - name: Wait for database
+        run: sleep 15
 
       - name: Start API
-        run: |
-          docker compose up -d api
-          sleep 5
+        run: docker compose up -d api
+
+      - name: Wait for API
+        run: sleep 5
 
       - name: Run tests
         run: docker compose exec -T api pytest tests/ -v
 
       - name: Teardown
-        run: docker compose d
+        run: docker compose down
