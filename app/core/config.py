@@ -14,3 +14,4 @@ class Settings(BaseSettings):
         env_file = ".env"
 
 # instancia global que usan todos los modulos
+settings = Settings()
